@@ -1,5 +1,5 @@
 post:
-  summary: Registers a MEV deposit on the DEX demo.
+  summary: Registers a MEV deposit on the YCabal.
   tags:
     - user
   requestBody:
