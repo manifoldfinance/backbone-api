@@ -1,0 +1,33 @@
+post:
+  summary: Registers a relay chain deposit on the DEX demo.
+  tags:
+    - user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            asset_id:
+              type: string
+              description: The asset ID deposited.
+            quantity:
+              type: string
+              description: The amount of the asset deposited.
+            relay_chain_id:
+              type: string
+              enum:
+                - ETH
+            relay_chain_transaction_hash:
+              type: string
+              description: The transaction hash of the deposit on the relay chain.
+  responses:
+    '200':
+      description: Deposit successfully initiated.
+      content:
+        application/json:
+          schema:
+            type: object
+            allOf:
+              - $ref: ../components/schemas/BlockInclusionResponse.yaml
