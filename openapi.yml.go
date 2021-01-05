@@ -1711,7 +1711,7 @@ func openapi.YmlRegister(subcommand bool) {
 			cmd := &cobra.Command{
 				Use: "",
 				Short: "Registers a MEV deposit on the DEX demo.",
-				Long: cli.Markdown("\n## Request Schema (application/json)\n\nproperties:\n  asset_id:\n    description: The asset ID deposited.\n    type: string\n  quantity:\n    description: The amount of the asset deposited.\n    type: string\n  relay_chain_id:\n    enum:\n    - ETH\n    type: string\n  relay_chain_transaction_hash:\n    description: The transaction hash of the deposit on the MEV.\n    type: string\ntype: object\n"),
+				Long: cli.Markdown("\n## Request Schema (application/json)\n\nproperties:\n  asset_id:\n    description: The asset ID deposited.\n    type: string\n  quantity:\n    description: The amount of the asset deposited.\n    type: string\n  cabal_chain_id:\n    enum:\n    - ETH\n    type: string\n  cabal_chain_transaction_hash:\n    description: The transaction hash of the deposit on the MEV.\n    type: string\ntype: object\n"),
 				Example: examples,
 				Args: cobra.MinimumNArgs(0),
 				Run: func(cmd *cobra.Command, args []string) {

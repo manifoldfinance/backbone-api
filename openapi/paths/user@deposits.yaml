@@ -15,11 +15,11 @@ post:
             quantity:
               type: string
               description: The amount of the asset deposited.
-            relay_chain_id:
+            cabal_chain_id:
               type: string
               enum:
                 - ETH
-            relay_chain_transaction_hash:
+            cabal_chain_transaction_hash:
               type: string
               description: The transaction hash of the deposit on the MEV.
   responses:

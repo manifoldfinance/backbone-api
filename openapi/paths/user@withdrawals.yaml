@@ -12,7 +12,7 @@ post:
             beneficiary:
               type: string
               description: >-
-                The address of the recipient who will unlock funds on the relay
+                The address of the recipient who will unlock funds on the cabal
                 chain. Hex-encoded.
             asset_id:
               type: string
