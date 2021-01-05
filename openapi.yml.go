@@ -774,7 +774,7 @@ func openapi.YmlServers() []map[string]string {
 		return resp, decoded, nil
 	}
 
-	// Openapi.Yml Registers a relay chain deposit on the DEX demo.
+	// Openapi.Yml Registers a MEV deposit on the DEX demo.
 	func Openapi.Yml(params *viper.Viper, body string) (*gentleman.Response, map[string]interface{}, error) {
 		handlerPath := ""
 		if openapi.YmlSubcommand {
@@ -1710,8 +1710,8 @@ func openapi.YmlRegister(subcommand bool) {
 
 			cmd := &cobra.Command{
 				Use: "",
-				Short: "Registers a relay chain deposit on the DEX demo.",
-				Long: cli.Markdown("\n## Request Schema (application/json)\n\nproperties:\n  asset_id:\n    description: The asset ID deposited.\n    type: string\n  quantity:\n    description: The amount of the asset deposited.\n    type: string\n  relay_chain_id:\n    enum:\n    - ETH\n    type: string\n  relay_chain_transaction_hash:\n    description: The transaction hash of the deposit on the relay chain.\n    type: string\ntype: object\n"),
+				Short: "Registers a MEV deposit on the DEX demo.",
+				Long: cli.Markdown("\n## Request Schema (application/json)\n\nproperties:\n  asset_id:\n    description: The asset ID deposited.\n    type: string\n  quantity:\n    description: The amount of the asset deposited.\n    type: string\n  relay_chain_id:\n    enum:\n    - ETH\n    type: string\n  relay_chain_transaction_hash:\n    description: The transaction hash of the deposit on the MEV.\n    type: string\ntype: object\n"),
 				Example: examples,
 				Args: cobra.MinimumNArgs(0),
 				Run: func(cmd *cobra.Command, args []string) {
@@ -1917,7 +1917,7 @@ func openapi.YmlRegister(subcommand bool) {
 			cmd := &cobra.Command{
 				Use: "",
 				Short: "Initiates a withdrawal of a cleared asset.",
-				Long: cli.Markdown("\n## Request Schema (application/json)\n\nproperties:\n  asset_id:\n    description: The ID of the cleared asset to be withdrawn.\n    type: string\n  beneficiary:\n    description: The address of the recipient who will unlock funds on the relay chain. Hex-encoded.\n    type: string\n  quantity:\n    description: The amount of the cleared asset to withdraw, as represented in the asset's base units.\n    type: string\ntype: object\n"),
+				Long: cli.Markdown("\n## Request Schema (application/json)\n\nproperties:\n  asset_id:\n    description: The ID of the cleared asset to be withdrawn.\n    type: string\n  beneficiary:\n    description: The address of the recipient who will unlock funds on the MEV. Hex-encoded.\n    type: string\n  quantity:\n    description: The amount of the cleared asset to withdraw, as represented in the asset's base units.\n    type: string\ntype: object\n"),
 				Example: examples,
 				Args: cobra.MinimumNArgs(0),
 				Run: func(cmd *cobra.Command, args []string) {

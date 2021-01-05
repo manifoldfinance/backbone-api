@@ -1,5 +1,5 @@
 post:
-  summary: Registers a relay chain deposit on the DEX demo.
+  summary: Registers a MEV deposit on the DEX demo.
   tags:
     - user
   requestBody:
@@ -21,7 +21,7 @@ post:
                 - ETH
             relay_chain_transaction_hash:
               type: string
-              description: The transaction hash of the deposit on the relay chain.
+              description: The transaction hash of the deposit on the MEV.
   responses:
     '200':
       description: Deposit successfully initiated.

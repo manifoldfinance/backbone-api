@@ -7,7 +7,7 @@ properties:
       Hex-encoded.
   merkle_proof:
     type: string
-    description: The Merkle proof required to unlock funds on the relay chain.
+    description: The Merkle proof required to unlock funds on the MEV.
   merkle_leaf:
     type: string
     description: The Merkle leaf hash of the withdrawal.
