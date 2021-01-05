@@ -18,7 +18,7 @@ post:
               items:
                 type: string
   responses:
-    '200':
+    "200":
       description: >-
         Bulk cancel completed. Some response may have failed; see the response
         body itself to deal with individual errors.

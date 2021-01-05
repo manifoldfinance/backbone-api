@@ -3,7 +3,7 @@ get:
   tags:
     - user
   responses:
-    '200':
+    "200":
       description: The user's balances.
       content:
         application/json:

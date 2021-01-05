@@ -40,14 +40,14 @@ paths:
                 password:
                   type: string
       responses:
-        '204':
+        "204":
           description: User successfully logged in. The session ID is returned in a cookie.
           headers:
             Set-Cookie:
               schema:
                 type: string
                 example: uex_session=12345abc;
-        '403':
+        "403":
           description: Authentication failed.
 
   /auth/logout:
@@ -56,7 +56,7 @@ paths:
       tags:
         - auth
       responses:
-        '204':
+        "204":
           description: User successfully logged out.
 
   /auth/change_password:
@@ -80,14 +80,14 @@ paths:
                 new_password:
                   type: string
       responses:
-        '204':
+        "204":
           description: Password successfully changed.
           headers:
             Set-Cookie:
               schema:
                 type: string
                 example: uex_session=12345abc;
-        '403':
+        "403":
           description: Invalid password.
 
   /exchange/orders:
@@ -104,14 +104,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderCreationRequest'
+              $ref: "#/components/schemas/OrderCreationRequest"
       responses:
-        '204':
+        "204":
           description: Order successfully posted.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderCreationResponse'
+                $ref: "#/components/schemas/OrderCreationResponse"
     put:
       summary: Modifies an existing order. Funds will immediately debited if the quantity increases, or credited if the quantity decreases.
       tags:
@@ -125,14 +125,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: "#/components/schemas/Order"
       responses:
-        '200':
+        "200":
           description: Order successfully modified.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderCreationResponse'
+                $ref: "#/components/schemas/OrderCreationResponse"
 
   /exchange/orders/{order_id}:
     get:
@@ -147,13 +147,13 @@ paths:
           required: true
           description: Numeric ID of the order.
       responses:
-        '200':
+        "200":
           description: Returns the looked-up order.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderWithFills'
-        '404':
+                $ref: "#/components/schemas/OrderWithFills"
+        "404":
           description: Order not found.
     delete:
       summary: Cancels an order by its ID.
@@ -171,17 +171,17 @@ paths:
           required: true
           description: Numeric ID of the order.
       responses:
-        '200':
+        "200":
           description: Order successfully cancelled.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BlockInclusionResponse'
-        '403':
+                $ref: "#/components/schemas/BlockInclusionResponse"
+        "403":
           description: Order is not owned by current user.
-        '422':
+        "422":
           description: Order is already cancelled.
-        '404':
+        "404":
           description: Order not found.
 
   /exchange/orders/cancel:
@@ -205,7 +205,7 @@ paths:
                   items:
                     type: string
       responses:
-        '200':
+        "200":
           description: Bulk cancel completed. Some response may have failed; see the response body itself to deal with individual errors.
           content:
             application/json:
@@ -213,8 +213,8 @@ paths:
                 type: array
                 items:
                   oneOf:
-                    - $ref: '#/components/schemas/BlockInclusionResponse'
-                    - $ref: '#/components/schemas/BlockInclusionFailure'
+                    - $ref: "#/components/schemas/BlockInclusionResponse"
+                    - $ref: "#/components/schemas/BlockInclusionFailure"
 
   /user/balance:
     get:
@@ -222,12 +222,12 @@ paths:
       tags:
         - user
       responses:
-        '200':
+        "200":
           description: The user's balances.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Balance'
+                $ref: "#/components/schemas/Balance"
 
   /user/orders:
     get:
@@ -235,9 +235,9 @@ paths:
       tags:
         - user
       parameters:
-        - $ref: '#/components/parameters/Start'
+        - $ref: "#/components/parameters/Start"
       responses:
-        '200':
+        "200":
           description: The user's orders.
           content:
             application/json:
@@ -249,7 +249,7 @@ paths:
                   orders:
                     type: array
                     items:
-                      $ref: '#/components/schemas/OrderWithFills'
+                      $ref: "#/components/schemas/OrderWithFills"
 
   /user/fills:
     get:
@@ -257,10 +257,10 @@ paths:
       tags:
         - user
       parameters:
-        - $ref: '#/components/parameters/StartBlock'
-        - $ref: '#/components/parameters/EndBlock'
+        - $ref: "#/components/parameters/StartBlock"
+        - $ref: "#/components/parameters/EndBlock"
       responses:
-        '200':
+        "200":
           description: The user's fills.
           content:
             application/json:
@@ -270,7 +270,7 @@ paths:
                   fills:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Fill'
+                      $ref: "#/components/schemas/Fill"
 
   /user/send:
     post:
@@ -291,14 +291,14 @@ paths:
                 asset_id:
                   type: string
       responses:
-        '200':
+        "200":
           description: Status of the transfer.
           content:
             application/json:
               schema:
                 type: object
                 allOf:
-                  - $ref: '#/components/schemas/BlockInclusionResponse'
+                  - $ref: "#/components/schemas/BlockInclusionResponse"
 
   /user/withdrawals:
     post:
@@ -322,18 +322,18 @@ paths:
                   type: string
                   description: The amount of the cleared asset to withdraw, as represented in the asset's base units.
       responses:
-        '200':
+        "200":
           description: Withdrawal successfully initiated.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Withdrawal'
+                $ref: "#/components/schemas/Withdrawal"
     get:
       summary: Gets the user's list of withdrawals.
       tags:
         - user
       responses:
-        '200':
+        "200":
           description: List of withdrawals.
           content:
             application/json:
@@ -345,7 +345,7 @@ paths:
                   withdrawals:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Withdrawal'
+                      $ref: "#/components/schemas/Withdrawal"
 
   /user/deposits:
     post:
@@ -367,19 +367,19 @@ paths:
                   description: The amount of the asset deposited.
                 cabal_chain_id:
                   type: string
-                  enum: ['ETH']
+                  enum: ["ETH"]
                 cabal_chain_transaction_hash:
                   type: string
                   description: The transaction hash of the deposit on the MEV.
       responses:
-        '200':
+        "200":
           description: Deposit successfully initiated.
           content:
             application/json:
               schema:
                 type: object
                 allOf:
-                  - $ref: '#/components/schemas/BlockInclusionResponse'
+                  - $ref: "#/components/schemas/BlockInclusionResponse"
 
   /markets/{market_id}/candles:
     get:
@@ -408,14 +408,14 @@ paths:
           description: Granularity of candle data to return.
           schema:
             type: string
-            enum: ['1m', '5m', '15m', '60m', '1d']
+            enum: ["1m", "5m", "15m", "60m", "1d"]
       responses:
-        '200':
+        "200":
           description: Candle data.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CandlestickResponse'
+                $ref: "#/components/schemas/CandlestickResponse"
 
   /markets/{market_id}/spread/{block_number}:
     get:
@@ -434,12 +434,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: The batch state.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Spread'
+                $ref: "#/components/schemas/Spread"
 
   /markets/{market_id}/book:
     get:
@@ -453,12 +453,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: The batch state.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Spread'
+                $ref: "#/components/schemas/Spread"
 
   /markets/{market_id}/batches/{block_number}:
     get:
@@ -477,12 +477,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: The batch state.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BatchesResponse'
+                $ref: "#/components/schemas/BatchesResponse"
 
   /markets/{market_id}/daily:
     get:
@@ -496,7 +496,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: The stats.
           content:
             application/json:
@@ -516,19 +516,18 @@ paths:
                   low:
                     type: string
 
-
   /markets:
     get:
       summary: Lists all markets.
       tags:
         - market
       responses:
-        '200':
+        "200":
           description: List of markets.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Market'
+                $ref: "#/components/schemas/Market"
 
 components:
   securitySchemes:
@@ -611,8 +610,8 @@ components:
 
     BatchesResponse:
       allOf:
-        - $ref: '#/components/schemas/BlockInclusionResponse'
-        - $ref: '#/components/schemas/BatchInfo'
+        - $ref: "#/components/schemas/BlockInclusionResponse"
+        - $ref: "#/components/schemas/BatchInfo"
     BatchInfo:
       type: object
       properties:
@@ -628,21 +627,21 @@ components:
           type: string
         direction:
           type: string
-          enum: ['BID', 'ASK']
+          enum: ["BID", "ASK"]
         price:
           type: string
         quantity:
           type: string
         type:
           type: string
-          enum: ['MARKET', 'LIMIT']
+          enum: ["MARKET", "LIMIT"]
         time_in_force:
           type: integer
 
     OrderCreationResponse:
       allOf:
-        - $ref: '#/components/schemas/BlockInclusionResponse'
-        - $ref: '#/components/schemas/Order'
+        - $ref: "#/components/schemas/BlockInclusionResponse"
+        - $ref: "#/components/schemas/Order"
     Order:
       type: object
       properties:
@@ -652,23 +651,23 @@ components:
           type: string
         direction:
           type: string
-          enum: ['BID', 'ASK']
+          enum: ["BID", "ASK"]
         price:
           type: string
         quantity:
           type: string
         status:
           type: string
-          enum: ['FILLED', 'CANCELLED', 'OPEN']
+          enum: ["FILLED", "CANCELLED", "OPEN"]
         type:
           type: string
-          enum: ['MARKET', 'LIMIT']
+          enum: ["MARKET", "LIMIT"]
         time_in_force:
           type: integer
 
     OrderWithFills:
       allOf:
-        - $ref: '#/components/schemas/Order'
+        - $ref: "#/components/schemas/Order"
       properties:
         quantity_filled:
           type: string
@@ -697,7 +696,7 @@ components:
     Fill:
       type: object
       allOf:
-        - $ref: '#/components/schemas/BlockInclusionResponse'
+        - $ref: "#/components/schemas/BlockInclusionResponse"
       properties:
         quantity_filled:
           type: string
@@ -705,7 +704,7 @@ components:
           type: string
         direction:
           type: string
-          enum: ['BID', 'ASK']
+          enum: ["BID", "ASK"]
         order_id:
           type: string
         pair:
@@ -747,11 +746,11 @@ components:
         bids:
           type: array
           items:
-            $ref: '#/components/schemas/PriceQuantity'
+            $ref: "#/components/schemas/PriceQuantity"
         asks:
           type: array
           items:
-            $ref: '#/components/schemas/PriceQuantity'
+            $ref: "#/components/schemas/PriceQuantity"
 
     PriceQuantity:
       type: object

@@ -3,7 +3,7 @@ info:
   title: Manifold REST API
   version: 0.0.1
 servers:
-  - url: 'https://localhost:8000/api/v1/'
+  - url: "https://localhost:8000/api/v1/"
     description: URL to the REST API
 tags:
   - name: auth
@@ -26,8 +26,8 @@ paths:
     $ref: paths/auth@change_password.yaml
   /exchange/orders:
     $ref: paths/exchange@orders.yaml
-  '/exchange/orders/{order_id}':
-    $ref: 'paths/exchange@orders@{order_id}.yaml'
+  "/exchange/orders/{order_id}":
+    $ref: "paths/exchange@orders@{order_id}.yaml"
   /exchange/orders/cancel:
     $ref: paths/exchange@orders@cancel.yaml
   /user/balance:
@@ -42,16 +42,16 @@ paths:
     $ref: paths/user@withdrawals.yaml
   /user/deposits:
     $ref: paths/user@deposits.yaml
-  '/markets/{market_id}/candles':
-    $ref: 'paths/markets@{market_id}@candles.yaml'
-  '/markets/{market_id}/spread/{block_number}':
-    $ref: 'paths/markets@{market_id}@spread@{block_number}.yaml'
-  '/markets/{market_id}/book':
-    $ref: 'paths/markets@{market_id}@book.yaml'
-  '/markets/{market_id}/batches/{block_number}':
-    $ref: 'paths/markets@{market_id}@batches@{block_number}.yaml'
-  '/markets/{market_id}/daily':
-    $ref: 'paths/markets@{market_id}@daily.yaml'
+  "/markets/{market_id}/candles":
+    $ref: "paths/markets@{market_id}@candles.yaml"
+  "/markets/{market_id}/spread/{block_number}":
+    $ref: "paths/markets@{market_id}@spread@{block_number}.yaml"
+  "/markets/{market_id}/book":
+    $ref: "paths/markets@{market_id}@book.yaml"
+  "/markets/{market_id}/batches/{block_number}":
+    $ref: "paths/markets@{market_id}@batches@{block_number}.yaml"
+  "/markets/{market_id}/daily":
+    $ref: "paths/markets@{market_id}@daily.yaml"
   /markets:
     $ref: paths/markets.yaml
 components:

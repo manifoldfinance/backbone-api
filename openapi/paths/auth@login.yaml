@@ -15,12 +15,12 @@ post:
             password:
               type: string
   responses:
-    '204':
+    "204":
       description: User successfully logged in. The session ID is returned in a cookie.
       headers:
         Set-Cookie:
           schema:
             type: string
             example: uex_session=12345abc;
-    '403':
+    "403":
       description: Authentication failed.

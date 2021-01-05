@@ -10,13 +10,13 @@ get:
       required: true
       description: Numeric ID of the order.
   responses:
-    '200':
+    "200":
       description: Returns the looked-up order.
       content:
         application/json:
           schema:
             $ref: ../components/schemas/OrderWithFills.yaml
-    '404':
+    "404":
       description: Order not found.
 delete:
   summary: Cancels an order by its ID.
@@ -34,15 +34,15 @@ delete:
       required: true
       description: Numeric ID of the order.
   responses:
-    '200':
+    "200":
       description: Order successfully cancelled.
       content:
         application/json:
           schema:
             $ref: ../components/schemas/BlockInclusionResponse.yaml
-    '403':
+    "403":
       description: Order is not owned by current user.
-    '404':
+    "404":
       description: Order not found.
-    '422':
+    "422":
       description: Order is already cancelled.

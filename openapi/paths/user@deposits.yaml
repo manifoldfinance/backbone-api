@@ -23,7 +23,7 @@ post:
               type: string
               description: The transaction hash of the deposit on the MEV.
   responses:
-    '200':
+    "200":
       description: Deposit successfully initiated.
       content:
         application/json:

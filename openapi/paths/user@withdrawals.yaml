@@ -23,7 +23,7 @@ post:
                 The amount of the cleared asset to withdraw, as represented in
                 the asset's base units.
   responses:
-    '200':
+    "200":
       description: Withdrawal successfully initiated.
       content:
         application/json:
@@ -34,7 +34,7 @@ get:
   tags:
     - user
   responses:
-    '200':
+    "200":
       description: List of withdrawals.
       content:
         application/json:

@@ -3,5 +3,5 @@ post:
   tags:
     - auth
   responses:
-    '204':
+    "204":
       description: User successfully logged out.

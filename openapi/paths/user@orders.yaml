@@ -5,7 +5,7 @@ get:
   parameters:
     - $ref: ../components/parameters/Start.yaml
   responses:
-    '200':
+    "200":
       description: The user's orders.
       content:
         application/json:
