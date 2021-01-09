@@ -1,256 +1,90 @@
-# Manifold REST API OpenAPI Definition
+# Documentation for Manifold REST API
 
-## Working on your OpenAPI Definition
+<a name="documentation-for-api-endpoints"></a>
+## Documentation for API Endpoints
 
-### Install
+All URIs are relative to *https://localhost:8000/api/v1*
 
-1. Install [Node JS](https://nodejs.org/).
-2. Clone this repo and run `npm install` in the repo root.
+Class | Method | HTTP request | Description
+------------ | ------------- | ------------- | -------------
+*AuthApi* | [**authChangePasswordPost**](Apis/AuthApi.md#authchangepasswordpost) | **POST** /auth/change_password | Changes a user's password.
+*AuthApi* | [**authLoginPost**](Apis/AuthApi.md#authloginpost) | **POST** /auth/login | Logs a user in.
+*AuthApi* | [**authLogoutPost**](Apis/AuthApi.md#authlogoutpost) | **POST** /auth/logout | Logs a user out.
+*ExchangeApi* | [**exchangeOrdersCancelPost**](Apis/ExchangeApi.md#exchangeorderscancelpost) | **POST** /exchange/orders/cancel | Cancels a group of orders.
+*ExchangeApi* | [**exchangeOrdersOrderIdDelete**](Apis/ExchangeApi.md#exchangeordersorderiddelete) | **DELETE** /exchange/orders/{order_id} | Cancels an order by its ID.
+*ExchangeApi* | [**exchangeOrdersOrderIdGet**](Apis/ExchangeApi.md#exchangeordersorderidget) | **GET** /exchange/orders/{order_id} | Gets an order by its ID.
+*ExchangeApi* | [**exchangeOrdersPost**](Apis/ExchangeApi.md#exchangeorderspost) | **POST** /exchange/orders | Posts an order. Funds will be immediately debited.
+*ExchangeApi* | [**exchangeOrdersPut**](Apis/ExchangeApi.md#exchangeordersput) | **PUT** /exchange/orders | Modifies an existing order. Funds will immediately debited if the quantity increases, or credited if the quantity decreases.
+*MarketApi* | [**marketsGet**](Apis/MarketApi.md#marketsget) | **GET** /markets | Lists all markets.
+*MarketApi* | [**marketsMarketIdBatchesBlockNumberGet**](Apis/MarketApi.md#marketsmarketidbatchesblocknumberget) | **GET** /markets/{market_id}/batches/{block_number} | Gets all executed batches at a block (or latest)
+*MarketApi* | [**marketsMarketIdBookGet**](Apis/MarketApi.md#marketsmarketidbookget) | **GET** /markets/{market_id}/book | Gets all open order at latest block by market
+*MarketApi* | [**marketsMarketIdCandlesGet**](Apis/MarketApi.md#marketsmarketidcandlesget) | **GET** /markets/{market_id}/candles | Gets candlestick prices for the provided market.
+*MarketApi* | [**marketsMarketIdDailyGet**](Apis/MarketApi.md#marketsmarketiddailyget) | **GET** /markets/{market_id}/daily | Daily Price Stats
+*MarketApi* | [**marketsMarketIdSpreadBlockNumberGet**](Apis/MarketApi.md#marketsmarketidspreadblocknumberget) | **GET** /markets/{market_id}/spread/{block_number} | Gets the batch auction state for the provided market ID and the block number.
+*UserApi* | [**userBalanceGet**](Apis/UserApi.md#userbalanceget) | **GET** /user/balance | Returns the user's balance across all supported chains.
+*UserApi* | [**userDepositsPost**](Apis/UserApi.md#userdepositspost) | **POST** /user/deposits | Registers a MEV deposit on the YCabal.
+*UserApi* | [**userFillsGet**](Apis/UserApi.md#userfillsget) | **GET** /user/fills | Gets all fills relevant to this user.
+*UserApi* | [**userOrdersGet**](Apis/UserApi.md#userordersget) | **GET** /user/orders | Gets all orders created by this user.
+*UserApi* | [**userSendPost**](Apis/UserApi.md#usersendpost) | **POST** /user/send | Transfers Funds
+*UserApi* | [**userWithdrawalsGet**](Apis/UserApi.md#userwithdrawalsget) | **GET** /user/withdrawals | Gets the user's list of withdrawals.
+*UserApi* | [**userWithdrawalsPost**](Apis/UserApi.md#userwithdrawalspost) | **POST** /user/withdrawals | Initiates a withdrawal of a cleared asset.
 
-### Usage
 
-#### `npm start`
+<a name="documentation-for-models"></a>
+## Documentation for Models
 
-Starts the reference docs preview server.
+ - [Balance](.//Models/Balance.md)
+ - [BalanceBalances](.//Models/BalanceBalances.md)
+ - [BatchInfo](.//Models/BatchInfo.md)
+ - [BatchesResponse](.//Models/BatchesResponse.md)
+ - [BlockInclusionFailure](.//Models/BlockInclusionFailure.md)
+ - [BlockInclusionFailureError](.//Models/BlockInclusionFailureError.md)
+ - [BlockInclusionResponse](.//Models/BlockInclusionResponse.md)
+ - [BlockInclusionResponseBlockInclusion](.//Models/BlockInclusionResponseBlockInclusion.md)
+ - [CandlestickResponse](.//Models/CandlestickResponse.md)
+ - [CandlestickResponseCandles](.//Models/CandlestickResponseCandles.md)
+ - [Fill](.//Models/Fill.md)
+ - [InlineObject](.//Models/InlineObject.md)
+ - [InlineObject1](.//Models/InlineObject1.md)
+ - [InlineObject2](.//Models/InlineObject2.md)
+ - [InlineObject3](.//Models/InlineObject3.md)
+ - [InlineObject4](.//Models/InlineObject4.md)
+ - [InlineObject5](.//Models/InlineObject5.md)
+ - [InlineResponse200](.//Models/InlineResponse200.md)
+ - [InlineResponse2001](.//Models/InlineResponse2001.md)
+ - [InlineResponse2002](.//Models/InlineResponse2002.md)
+ - [InlineResponse2003](.//Models/InlineResponse2003.md)
+ - [Market](.//Models/Market.md)
+ - [Order](.//Models/Order.md)
+ - [OrderCreationRequest](.//Models/OrderCreationRequest.md)
+ - [OrderCreationResponse](.//Models/OrderCreationResponse.md)
+ - [OrderWithFills](.//Models/OrderWithFills.md)
+ - [PriceQuantity](.//Models/PriceQuantity.md)
+ - [Spread](.//Models/Spread.md)
+ - [Withdrawal](.//Models/Withdrawal.md)
 
-#### `npm run build`
 
-Bundles the definition to the dist folder.
+<a name="documentation-for-authorization"></a>
+## Documentation for Authorization
 
-#### `npm test`
+<a name="CSRFToken"></a>
+### CSRFToken
 
-Validates the definition.
+- **Type**: API key
+- **API key parameter name**: X-CSRF-Token
+- **Location**: HTTP header
 
-## Contribution Guide
+<a name="OTP"></a>
+### OTP
 
-Below is a sample contribution guide. The tools
-in the repository don't restrict you to any
-specific structure. Adjust the contribution guide
-to match your own structure. However, if you
-don't have a structure in mind, this is a
-good place to start.
+- **Type**: API key
+- **API key parameter name**: X-OTP-Token
+- **Location**: HTTP header
 
-Update this contribution guide if you
-adjust the file/folder organization.
+<a name="SessionCookie"></a>
+### SessionCookie
 
-The `.redocly.yaml` controls settings for various
-tools including the lint tool and the reference
-docs engine. Open it to find examples and
-[read the docs](https://docs.redoc.ly/cli/configuration/)
-for more information.
+- **Type**: API key
+- **API key parameter name**: uex_session
+- **Location**: 
 
-### Schemas
-
-#### Adding Schemas
-
-1. Navigate to the `openapi/components/schemas` folder.
-2. Add a file named as you wish to name the schema.
-3. Define the schema.
-4. Refer to the schema using the `$ref` (see example below).
-
-##### Example Schema
-
-This is a very simple schema example:
-
-```yaml
-type: string
-description: The resource ID. Defaults to UUID v4
-maxLength: 50
-example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
-```
-
-This is a more complex schema example:
-
-```yaml
-type: object
-properties:
-  id:
-    description: The customer identifier string
-    readOnly: true
-    allOf:
-      - $ref: ./ResourceId.yaml
-  websiteId:
-    description: The website's ID
-    allOf:
-      - $ref: ./ResourceId.yaml
-  paymentToken:
-    type: string
-    writeOnly: true
-    description: |
-      A write-only payment token; if supplied, it will be converted into a
-      payment instrument and be set as the `defaultPaymentInstrument`. The
-      value of this property will override the `defaultPaymentInstrument`
-      in the case that both are supplied. The token may only be used once
-      before it is expired.
-  defaultPaymentInstrument:
-    $ref: ./PaymentInstrument.yaml
-  createdTime:
-    description: The customer created time
-    allOf:
-      - $ref: ./ServerTimestamp.yaml
-  updatedTime:
-    description: The customer updated time
-    allOf:
-      - $ref: ./ServerTimestamp.yaml
-  tags:
-    description: A list of customer's tags
-    readOnly: true
-    type: array
-    items:
-      $ref: ./Tags/Tag.yaml
-  revision:
-    description: >
-      The number of times the customer data has been modified.
-
-      The revision is useful when analyzing webhook data to determine if the
-      change takes precedence over the current representation.
-    type: integer
-    readOnly: true
-  _links:
-    type: array
-    description: The links related to resource
-    readOnly: true
-    minItems: 3
-    items:
-      anyOf:
-        - $ref: ./Links/SelfLink.yaml
-        - $ref: ./Links/NotesLink.yaml
-        - $ref: ./Links/DefaultPaymentInstrumentLink.yaml
-        - $ref: ./Links/LeadSourceLink.yaml
-        - $ref: ./Links/WebsiteLink.yaml
-  _embedded:
-    type: array
-    description: >-
-      Any embedded objects available that are requested by the `expand`
-      querystring parameter.
-    readOnly: true
-    minItems: 1
-    items:
-      anyOf:
-        - $ref: ./Embeds/LeadSourceEmbed.yaml
-```
-
-##### Using the `$ref`
-
-Notice in the complex example above the schema definition itself has `$ref` links to other schemas defined.
-
-Here is a small excerpt with an example:
-
-```yaml
-defaultPaymentInstrument:
-  $ref: ./PaymentInstrument.yaml
-```
-
-The value of the `$ref` is the path to the other schema definition.
-
-You may use `$ref`s to compose schema from other existing schema to avoid duplication.
-
-You will use `$ref`s to reference schema from your path definitions.
-
-#### Editing Schemas
-
-1. Navigate to the `openapi/components/schemas` folder.
-2. Open the file you wish to edit.
-3. Edit.
-
-### Paths
-
-#### Adding a Path
-
-1. Navigate to the `openapi/paths` folder.
-2. Add a new YAML file named like your URL endpoint except replacing `/` with `@` and putting path parameters into curly braces like `{example}`.
-3. Add the path and a ref to it inside of your `openapi.yaml` file inside of the `openapi` folder.
-
-Example addition to the `openapi.yaml` file:
-
-```yaml
-"/customers/{id}":
-  $ref: "./paths/customers@{id}.yaml"
-```
-
-Here is an example of a YAML file named `customers@{id}.yaml` in the `paths` folder:
-
-```yaml
-get:
-  tags:
-    - Customers
-  summary: Retrieve a list of customers
-  operationId: GetCustomerCollection
-  description: |
-    You can have a markdown description here.
-  parameters:
-    - $ref: ../components/parameters/collectionLimit.yaml
-    - $ref: ../components/parameters/collectionOffset.yaml
-    - $ref: ../components/parameters/collectionFilter.yaml
-    - $ref: ../components/parameters/collectionQuery.yaml
-    - $ref: ../components/parameters/collectionExpand.yaml
-    - $ref: ../components/parameters/collectionFields.yaml
-  responses:
-    "200":
-      description: A list of Customers was retrieved successfully
-      headers:
-        Rate-Limit-Limit:
-          $ref: ../components/headers/Rate-Limit-Limit.yaml
-        Rate-Limit-Remaining:
-          $ref: ../components/headers/Rate-Limit-Remaining.yaml
-        Rate-Limit-Reset:
-          $ref: ../components/headers/Rate-Limit-Reset.yaml
-        Pagination-Total:
-          $ref: ../components/headers/Pagination-Total.yaml
-        Pagination-Limit:
-          $ref: ../components/headers/Pagination-Limit.yaml
-        Pagination-Offset:
-          $ref: ../components/headers/Pagination-Offset.yaml
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: ../components/schemas/Customer.yaml
-        text/csv:
-          schema:
-            type: array
-            items:
-              $ref: ../components/schemas/Customer.yaml
-    "401":
-      $ref: ../components/responses/AccessForbidden.yaml
-  x-code-samples:
-    - lang: PHP
-      source:
-        $ref: ../code_samples/PHP/customers/get.php
-post:
-  tags:
-    - Customers
-  summary: Create a customer (without an ID)
-  operationId: PostCustomer
-  description: Another markdown description here.
-  requestBody:
-    $ref: ../components/requestBodies/Customer.yaml
-  responses:
-    "201":
-      $ref: ../components/responses/Customer.yaml
-    "401":
-      $ref: ../components/responses/AccessForbidden.yaml
-    "409":
-      $ref: ../components/responses/Conflict.yaml
-    "422":
-      $ref: ../components/responses/InvalidDataError.yaml
-  x-code-samples:
-    - lang: PHP
-      source:
-        $ref: ../code_samples/PHP/customers/post.php
-```
-
-You'll see extensive usage of `$ref`s in this example to different types of components including schemas.
-
-You'll also notice `$ref`s to code samples.
-
-### Code samples
-
-1. Navigate to the `openapi/code_samples` folder.
-2. Navigate to the `<language>` (e.g. PHP) sub-folder.
-3. Navigate to the `path` folder, and add ref to the code sample.
-
-You can add languages by adding new folders at the appropriate path level.
-
-More details inside the `code_samples` folder README.
