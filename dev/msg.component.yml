@@ -1,0 +1,78 @@
+MessageDisposition:
+      properties:
+        formatVersion:
+          type: string
+          minLength: 2
+          maxLength: 2
+          description: |
+            formatVersion identifies the format version
+            30
+          example: '30'
+        testProductionCode:
+          type: string
+          maxLength: 1
+          description: |
+            testProductionCode identifies if test or production.
+            * `T` - Test
+            * `P` - Production
+          enum:
+            - " "
+            - T
+            - P
+          example: 'T'
+        messageDuplicationCode:
+          type: string
+          maxLength: 1
+          description: |
+            MessageDuplicationCode
+            * ` ` - Original Message
+            * `R` - Retrieval of an original message
+            * `P` - Resend
+          enum:
+            - " "
+            - R
+            - P
+          example: " "
+        messageStatusIndicator:
+          type: string
+          maxLength: 1
+          description: |
+            MessageStatusIndicator
+            Outgoing Messages
+            * `0` - In process or Intercepted
+            * `2` - Successful with Accounting (Value)
+            * `3` - Rejected due to Error Condition
+            * `7` - Successful without Accounting (Non-Value)
+            Incoming Messages
+            * `N` - Successful with Accounting (Value)
+            * `S` - Successful without Accounting (Non-Value)
+          enum:
+            - 0
+            - 2
+            - 3
+            - 7
+            - N
+            - S
+    ReceiptTimeStamp:
+      properties:
+        receiptDate:
+          type: string
+          description: |
+            ReceiptDate
+            MMDD, based on the calendar date
+          minLength: 4
+          maxLength: 4
+          example: '0401'
+        receiptTime:
+          type: string
+          minLength: 4
+          maxLength: 4
+          description: |
+            ReceiptTime
+            HHMM, based on a 24-hour clock, Eastern Time
+          example: '1305'
+        receiptApplicationIdentification:
+          type: string
+          maxLength: 4
+          description: 'ApplicationIdentification'
+          example: 'RB11'
