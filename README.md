@@ -1,5 +1,13 @@
 # Documentation for Manifold REST API
 
+
+[RPC Inspector[(https://backbone-rpc.netlify.app/)
+
+[Market API Docs](https://ybackbone.netlify.app/)
+
+
+
+
 <a name="documentation-for-api-endpoints"></a>
 
 ## Documentation for API Endpoints
