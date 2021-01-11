@@ -1,0 +1,57 @@
+/batchTransfer/:
+    post:
+      tags:
+        - ""
+      summary: "batch Transfer"
+      description: "Batch Transfer"
+      operationId: "batchTransfer"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "from"
+          in: "query"
+          description: "The sender of the transfer"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "to"
+          in: "query"
+          description: "The recipient of the transfer"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "tokenId"
+          in: "query"
+          description: "The id of the token to be transferred"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+        - name: "data"
+          in: "query"
+          description: "Optional data to be sent with the transaction"
+          required: false
+          type: "string"
+        - in: "body"
+          name: "auth"
+          description: "authorization signature followed by the signature of the sender of the transfer."
+          required: true
+          schema:
+            type: "object"
+            properties:
+              freightTrustAuth:
+                $ref: "#/definitions/auth"
+              senderAuth:
+                $ref: "#/definitions/auth"
+
+      responses:
+        200:
+          description: "Successful Batch Transfer"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"

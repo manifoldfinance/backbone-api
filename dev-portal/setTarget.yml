@@ -1,0 +1,38 @@
+  /proxy/setTarget/:
+    post:
+      tags:
+        - "Proxy and Upgrade"
+      summary: "Sets the address of Function"
+      description: "Sets address that is delegate called to run a function's logic. This function must be called with an signed nonce from the Freight Trust account in the https body."
+      operationId: "setTarget"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "Function selector whose target to change."
+          required: true
+          type: "string"
+          minLength: 10
+          maxLength: 10
+        - name: "target"
+          in: "query"
+          description: "The address to set the function too"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - in: "body"
+          name: "auth"
+          description: "The Freight Trust signature of the nonce"
+          required: true
+          schema:
+            $ref: "#/definitions/auth"
+      produces:
+        - "application/xml"
+        - "application/json"
+      responses:
+        200:
+          description: "Successfuly Changed"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        425:
+          description: "Invalid Input"

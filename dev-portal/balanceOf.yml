@@ -1,0 +1,25 @@
+ /balanceOf/:
+    get:
+      tags:
+        - "ERC-based Token"
+      summary: "Balance Of an Asset in an Address "
+      operationId: "balanceOf"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "owner"
+          in: "query"
+          description: "The address of the owner"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"

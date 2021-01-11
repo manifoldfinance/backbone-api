@@ -1,0 +1,32 @@
+/Query/estimateQueryCost/:
+    get:
+      tags:
+        - "Dispatcher"
+      summary: "Returns Dispatcher Event Logs, such as Liqudiity Status"
+      operationId: "Dispatcher"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "Dispatcher"
+          in: "query"
+          description: "The address of the Dispatcher"
+          required: true
+          type: "string"
+          minLength: 42
+          maxLength: 42
+        - name: "index"
+          in: "query"
+          description: "The index assigned to the Dispatcher"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"

@@ -1,0 +1,443 @@
+---
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Document Store API
+paths:
+  /config:
+    get:
+      tags:
+        - Configuration
+      description: Retrieves the document store service configuration.
+      responses:
+        200:
+          description: Retrieve the document store service configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-documentstore-Config'
+        500:
+          description: Internal error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /documents/{path}:
+    get:
+      tags:
+        - Documents
+      description: When the path matches a folder, it retrieves the (paginated) list of documents and subfolders contained within it. When the path matches a document, it returns either its content or, if query parameter details_only is true, its metadata. Use empty string for root folder.
+      parameters:
+        - $ref: '#/components/parameters/service-documentstore-path'
+        - $ref: '#/components/parameters/service-documentstore-offset'
+        - $ref: '#/components/parameters/service-documentstore-limit'
+      responses:
+        200:
+          description: Document content, metadata or list of documents and subfolders.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/service-documentstore-Documents'
+                  - $ref: '#/components/schemas/service-documentstore-Resource'
+            text/binary:
+              schema:
+                type: string
+        400:
+          description: Parameters offset or limit invalid.
+        404:
+          description: Document or folder not found.
+        500:
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Documents
+      description: Uploads a document. If the path doesn't exist, it will be automatically created.
+      parameters:
+        - $ref: '#/components/parameters/service-documentstore-path'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/service-documentstore-DocumentUpload'
+      responses:
+        201:
+          description: Document successfully uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-documentstore-DocumentStatus'
+        409:
+          description: Document already existed.
+        500:
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+        - Documents
+      description: Calculates and stores the hash of a document. Useful when working with external storage (AWS or Azure) where files may be uploaded through means other than the document store API.
+      parameters:
+        - $ref: '#/components/parameters/service-documentstore-path'
+      responses:
+        201:
+          description: Hash successfully calculated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-documentstore-DocumentStatus'
+        404:
+          description: Document not found.
+        500:
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Documents
+      description: Uploads a document, overwriting it if it already existed. If the path doesn't exist, it will be automatically created.
+      parameters:
+        - $ref: '#/components/parameters/service-documentstore-path'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/service-documentstore-DocumentUpload'
+      responses:
+        201:
+          description: Document successfully uploaded/updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-documentstore-DocumentStatus'
+        500:
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - Documents
+      description: Deletes a document.
+      parameters:
+        - $ref: '#/components/parameters/service-documentstore-path'
+      responses:
+        204:
+          description: Document successfully deleted.
+        404:
+          description: Document didn't exist.
+        500:
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /transfers:
+    get:
+      tags:
+        - Transfers
+      description: Retrieves the (paginated) document transfer log.
+      parameters:
+        - $ref: '#/components/parameters/service-documentstore-offset'
+        - $ref: '#/components/parameters/service-documentstore-limit'
+      responses:
+        200:
+          description: Document transfer log.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-documentstore-TransfersLog'
+        400:
+          description: Parameters offset or limit invalid.
+        500:
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Transfers
+      description: Transfers a document.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - from
+                - to
+                - document
+              properties:
+                from:
+                  description: Sender destination.
+                  type: string
+                to:
+                  description: Recepient destination.
+                  type: string
+                document:
+                  description: Path to document to send.
+                  type: string
+      responses:
+        201:
+          description: Document successfully uploaded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-documentstore-DocumentStatus'
+        500:
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /search:
+    get:
+      tags:
+        - Search
+      description: Searches for document by name or hash. Result will contain at most 100 entries.
+      parameters:
+        - $ref: '#/components/parameters/service-documentstore-search-query'
+        - $ref: '#/components/parameters/service-documentstore-search-by-hash'
+      responses:
+        200:
+          description: Search results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-documentstore-SearchResults'
+        500:
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /sync_hashes:
+    post:
+      tags:
+        - Search
+      description: Ensures that every document in storage has its associated hash calculated.
+      parameters:
+        - in: query
+          name: reset
+          description: Resets all hashes. Useful for cleaning the internal database when using external storage (AWS or Azure) and documents are deleted through means other than document store API.
+          schema:
+            type: boolean
+            default: false
+      responses:
+        200:
+          description: Hash sync result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/service-documentstore-SyncResult'
+        500:
+          description: Internal error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+components:
+  schemas:
+    service-documentstore-Config:
+      type: object
+      required: 
+        - provider
+      properties:
+        provider:
+          description: Storage provider for the service.
+          type: string
+          enum: [internal, aws, azure]
+        region:
+          description: Region of the storage provider (when applicable).
+          type: string
+        bucket_or_container:
+          description: Bucket or container linked to the service.
+          type: string
+    service-documentstore-Documents:
+      type: object
+      required:
+        - is_truncated
+        - entries
+      properties:
+        is_truncated:
+          description: True if there are more results available, false otherwise.
+          type: boolean
+        entries:
+          description: Array of resources (documents and folders).
+          type: array
+          items:
+            $ref: '#/components/schemas/service-documentstore-Resource'
+    service-documentstore-Resource:
+      type: object
+      required:
+        - name
+        - is_directory
+        - last_modified
+      properties:
+        name:
+          description: Name of document or folder.
+          type: string
+        is_directory:
+          description: True if the resource is a folder, false if the resource is a file.
+          type: boolean
+        size:
+          description: Document size in bytes.
+          type: integer
+        last_modified:
+          description: Date-time when the document was last modified.
+          type: string
+    service-documentstore-TransfersLog:
+      type: object
+      required:
+        - is_truncated
+        - entries
+      properties:
+        is_truncated:
+          description: True if there are more results available, false otherwise.
+          type: boolean
+        entries:
+          description: Array of transfer log entries.
+          type: array
+          items:
+            $ref: '#/components/schemas/service-documentstore-TransferLog'
+    service-documentstore-TransferLog:
+      type: object
+      required:
+        - id
+        - timestamp
+        - from
+        - to
+        - hash
+        - document
+        - status
+      properties:
+        id:
+          description: Unique identifier for the transfer.
+          type: string
+        timestamp:
+          description: Date-time when the transfer took place.
+          type: string
+        fromDestinationUri:
+          description: Sender.
+          type: string
+        toDestinationUri:
+          description: Receiver.
+          type: string
+        hash:
+          description: SHA256 of document.
+          type: string
+        documentPath:
+          description: Location of document at the time of the transfer.
+          type: string
+        status:
+          description: Status of the document transfer.
+          type: string
+          enum: ['sent', 'received', 'failed']
+    service-documentstore-DocumentUpload:
+      required:
+        - document
+      properties:
+        document:
+          description: Document to upload.
+          type: string
+          format: binary
+    service-documentstore-DocumentStatus:
+      required:
+        - result
+        - hash
+      properties:
+        result:
+          description: Operation result.
+          type: string
+        hash:
+          description: Document hash (SHA256).
+          type: string
+    service-documentstore-SearchResults:
+      required:
+        - documents
+        - missing_hashes
+      properties:
+        documents:
+          description: Array of documents that match the query.
+          type: array
+          items:
+            $ref: '#/components/schemas/service-documentstore-SearchResult'
+        missing_hashes:
+          description: True if at least one document without a hash was found during the search process. When this happens, consider using the sync_hashes API.
+          type: boolean
+    service-documentstore-SearchResult:
+      required:
+        - full_path
+        - last_modified
+        - size
+      properties:
+        full_path:
+          description: Document full path.
+          type: string
+        last_modified:
+          description: Date-time when the document was last modified.
+          type: string
+        size:
+          description: Size of the document in bytes.
+          type: integer
+        hash:
+          description: Hash of the document (SHA256).
+          type: string
+    service-documentstore-SyncResult:
+      required:
+        - hashes_calculated
+      properties:
+        hashes_calculated:
+          description: Number of hashes calculated. If the reset query parameter was used in the call, the number will match the document count in storage. Otherwise it will reflect the number of documents that were missing their hash.
+          type: integer
+    Error:
+      type: object
+      properties:
+        errorMessage:
+          type: string
+  parameters:
+    service-documentstore-offset:
+      name: offset
+      description: Number of entries to skip.
+      in: query
+      schema:
+        type: integer
+        default: 0
+    service-documentstore-limit:
+      name: limit
+      description: Maximum number of entries.
+      in: query
+      schema:
+        type: integer
+        default: 100
+    service-documentstore-path:
+      in: path
+      name: path
+      description: Path to document or folder.
+      schema:
+        type: string
+      required: true
+    service-documentstore-search-query:
+      name: query
+      in: query
+      description: String to search.
+      schema:
+        type: string
+      required: true
+    service-documentstore-search-by-hash:
+      name: by_hash
+      in: query
+      description: True to search by hash, false to search by name.
+      schema:
+        type: boolean
+        default: false

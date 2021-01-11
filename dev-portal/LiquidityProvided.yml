@@ -1,0 +1,27 @@
+  /liquidity/LiquidityProvided/:
+    get:
+      tags:
+        - "Liquidity"
+      summary: "Return LiquidityProvided"
+      operationId: "$FUNCTION_HASH"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "tokenId"
+          in: "query"
+          description: "The Id of the token in question"
+          required: true
+          type: "integer"
+          minimum: 0
+          maximum: 115792089237316195423570985008687907853269984665642564239457584207913129639935
+      responses:
+        200:
+          description: "Successful Query"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        420:
+          description: "Bad Request"
+        428:
+          description: "Request Timeout"
+
+          # Event `LiquidityProvided(address asset, address provider, uint256 amount)` {#Dispatcher-LiquidityProvided-address-address-uint256-}
